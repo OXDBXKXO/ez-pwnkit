@@ -1,13 +1,21 @@
 EXPLOIT=exploit
 
-.PHONY: default
-default: build
+default: build_c
 
-.PHONY: malicious_lib
-malicious_lib:
-	make -C ./internal PWN.so
+.PHONY: go_malicious_lib
+go_malicious_lib:
+	make -C ./internal PWN.so-go
 
-build: malicious_lib
+.PHONY: c_malicious_lib
+c_malicious_lib:
+	make -C ./internal PWN.so-c
+
+.PHONY: build_go
+build_go: go_malicious_lib
+	go build -o $(EXPLOIT) ./cmd/main.go
+
+.PHONY: build_c
+build_c: c_malicious_lib
 	go build -o $(EXPLOIT) ./cmd/main.go
 
 .PHONY: clean

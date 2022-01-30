@@ -18,6 +18,8 @@ As the exploit relies on a malicious shared library, a **PWN.so** file is genera
 
 The ***Makefile*** uses `sed` to temporarily change the package name of the ***payload.go*** file to `main`, hence making this ***Makefile*** Linux-only.
 
+As the Go payload is not as reliable as the C one, the ***Makefile*** will compile the exploit with the C payload by default. You can choose to compile with the Go payload using `make build_go`.
+
 
 
 ## Usage

