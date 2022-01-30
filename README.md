@@ -83,7 +83,7 @@ sh-5.1#
 
 ## Mitigation
 
-Patch `pkexec` if possible, other disable the ***setuid*** bit on the `pkexec` binary.
+Patch `pkexec` if possible, otherwise disable the ***setuid*** bit on the `pkexec` binary.
 
 ```bash
 chmod 0755 /usr/bin/pkexec
