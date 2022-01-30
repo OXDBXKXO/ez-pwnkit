@@ -35,6 +35,17 @@ The exploit can either be used with a command (flag `-c`) or as a reverse-shell 
 
 
 
+## Demonstration
+
+```bash
+$> ./exploit
+sh-5.1# id
+uid=0(root) gid=0(root) groups=0(root)
+sh-5.1#
+```
+
+
+
 ## Mitigation
 
 Patch `pkexec` if possible, other disable the ***setuid*** bit on the `pkexec` binary.
