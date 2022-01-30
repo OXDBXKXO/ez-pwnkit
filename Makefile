@@ -3,10 +3,11 @@ EXPLOIT=exploit
 .PHONY: default
 default: build
 
-exploit:
+.PHONY: malicious_lib
+malicious_lib:
 	make -C ./internal PWN.so
 
-build: exploit
+build: malicious_lib
 	go build -o $(EXPLOIT) ./cmd/main.go
 
 .PHONY: clean

