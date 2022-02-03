@@ -80,6 +80,7 @@ func main() {
 
 Note as `Command` and `RevShell` use `syscall.ForkExec` to run the exploit, resulting processes are separate from the main program and survive its end.
 
+Although **go-PwnKit** can be imported to your project from Github, do not forget that you will execute an untrusted shared library as root. Using a locally compiled `PWN.so` is hence highly recommended. Just sayin' 😚
 
 
 ## Demonstration
