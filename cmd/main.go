@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/OXDBXKXO/go-PwnKit"
+	"github.com/OXDBXKXO/ez-pwnkit"
 )
 
 func main() {
@@ -15,11 +15,11 @@ func main() {
 
 	var err error
 	if *reverseShell != "" {
-		gopwnkit.RevShell(*reverseShell)
+		ez_pwnkit.RevShell(*reverseShell)
 	} else if *cmd != "" {
-		gopwnkit.Command(*cmd, *output)
+		ez_pwnkit.Command(*cmd, *output)
 	} else if *shell {
-		gopwnkit.Shell()
+		ez_pwnkit.Shell()
 	} else {
 		flag.Usage()
 	}

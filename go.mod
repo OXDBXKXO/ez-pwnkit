@@ -1,3 +1,3 @@
-module github.com/OXDBXKXO/go-PwnKit
+module github.com/OXDBXKXO/ez-pwnkit
 
 go 1.17
